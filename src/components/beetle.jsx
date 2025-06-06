@@ -1,9 +1,12 @@
 // components/Beetle.jsx
 import React, { forwardRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useStore } from "@/store";
 
 const Beetle = forwardRef((props, ref) => {
   const { nodes, materials } = useGLTF("/Beetle_-transformed.glb");
+
+  const parts = useStore((state) => state.parts);
 
   const getCustomBodyMeshes = (type) => {
     const validType = Math.max(0, Math.min(2, type));
@@ -268,9 +271,9 @@ const Beetle = forwardRef((props, ref) => {
       />
 
       {/* Conditionally render your “custom” parts underneath */}
-      {getCustomBodyMeshes(bodyType)}
-      {getWheelsMeshes(wheelType)}
-      {getLightsMeshes(lightType)}
+      {getCustomBodyMeshes(parts.body)}
+      {getWheelsMeshes(parts.wheels)}
+      {getLightsMeshes(parts.lights)}
     </group>
   );
 });

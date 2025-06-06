@@ -33,6 +33,13 @@ const useStore = create((set) => ({
 
   // Methods
   updateRotateSpeed: (next) => set({ rotateSpeed: next }),
+  setParts: (next) =>
+    set((state) => ({
+      parts: {
+        ...state.parts,
+        ...next,
+      },
+    })),
   // Booleans
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
   //Theme
