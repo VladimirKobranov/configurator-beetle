@@ -165,22 +165,7 @@ const Beetle = forwardRef((props, ref) => {
   const getLightsMeshes = (type) => {
     switch (type) {
       case 0:
-        return (
-          <>
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Lights_0_1.geometry}
-              material={materials.DirtDrags_Lights}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              geometry={nodes.Lights_0_2.geometry}
-              material={materials.Shared}
-            />
-          </>
-        );
+        return;
       case 1:
         return (
           <>
@@ -194,6 +179,23 @@ const Beetle = forwardRef((props, ref) => {
               castShadow
               receiveShadow
               geometry={nodes.Lights_1_2.geometry}
+              material={materials.Shared}
+            />
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Lights_0_1.geometry}
+              material={materials.DirtDrags_Lights}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Lights_0_2.geometry}
               material={materials.Shared}
             />
           </>
