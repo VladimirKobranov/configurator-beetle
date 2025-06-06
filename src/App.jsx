@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -10,6 +10,7 @@ import {
 import Beetle from "./components/Beetle";
 
 import UIOverlay from "./components/UIOverlay"; // The separated UI component
+
 import { useStore } from "@/store";
 import { gridConfig, cameraConfig } from "@/configs/config";
 
@@ -18,13 +19,18 @@ function Scene() {
   const isGrid = useStore((state) => state.isGrid);
   const rotateSpeed = useStore((state) => state.rotateSpeed);
 
+  const theme = useStore((state) => state.theme);
+
   return (
     <>
       <PerspectiveCamera makeDefault {...cameraConfig} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[2, 2, 2]} intensity={1} />
       <Beetle ref={beetleRef} />
-      <color attach="background" args={["skyblue"]} />
+      <color
+        attach="background"
+        args={[theme === "dark" ? "#202020" : "skyblue"]}
+      />
       <OrbitControls
         minPolarAngle={0}
         maxPolarAngle={Math.PI / 2}
