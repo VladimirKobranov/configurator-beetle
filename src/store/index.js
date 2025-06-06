@@ -28,10 +28,16 @@ const useStore = create((set) => ({
   isWireframe: false,
   isGrid: true,
 
+  // Theme
+  theme: "light",
+
   // Methods
   updateRotateSpeed: (next) => set({ rotateSpeed: next }),
   // Booleans
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
+
+  //Theme
+  setTheme: (next) => set({ theme: next }),
 }));
 
 export { useStore };

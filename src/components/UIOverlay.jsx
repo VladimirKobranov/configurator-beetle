@@ -2,6 +2,7 @@ import { useStore } from "@/store";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { ThemeToggle } from "./themeToggler";
 
 export default function UIOverlay() {
   const rotateSpeed = useStore((state) => state.rotateSpeed);
@@ -34,6 +35,8 @@ export default function UIOverlay() {
         <p className="text-xs text-gray-600">
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
+
+        <ThemeToggle />
       </div>
     </div>
   );
