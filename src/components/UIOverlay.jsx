@@ -1,8 +1,11 @@
 import { useStore } from "@/store";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
+
 import { ThemeToggle } from "./themeToggler";
+
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function UIOverlay() {
   const rotateSpeed = useStore((state) => state.rotateSpeed);
@@ -16,9 +19,11 @@ export default function UIOverlay() {
         <h1 className="text-xl font-bold text-gray-800">Vite + React</h1>
 
         <div className="space-y-4">
-          <Button onClick={handleGridVisibility}>
-            Grid {isGrid ? "On" : "Off"}
-          </Button>
+          <div className="flex items-center space-x-2">
+            <Switch onClick={handleGridVisibility} />
+            <Label htmlFor="airplane-mode">Grid {isGrid ? "On" : "Off"}</Label>
+          </div>
+
           <Slider
             value={[rotateSpeed]} // make it controlled
             max={5}

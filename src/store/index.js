@@ -26,7 +26,7 @@ const useStore = create((set) => ({
   // Other values
   rotateSpeed: 0.5,
   isWireframe: false,
-  isGrid: true,
+  isGrid: false,
 
   // Theme
   theme: "light",
@@ -35,7 +35,6 @@ const useStore = create((set) => ({
   updateRotateSpeed: (next) => set({ rotateSpeed: next }),
   // Booleans
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
-
   //Theme
   setTheme: (next) => set({ theme: next }),
 }));
