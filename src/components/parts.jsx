@@ -12,7 +12,7 @@ const Parts = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="text-xl font-bold">Parts</h1>
+      <h1 className="text-xl font-bold text-center">Parts</h1>
 
       {/* Body */}
       <div className="mb-2">
@@ -22,7 +22,7 @@ const Parts = () => {
             <Button
               key={option}
               onClick={() => setParts({ body: option })}
-              variant={parts.body === option ? "default" : "ghost"}
+              variant={parts.body === option ? "default" : "secondary"}
             >
               Type {option}
             </Button>
@@ -38,7 +38,7 @@ const Parts = () => {
             <Button
               key={option}
               onClick={() => setParts({ wheels: option })}
-              variant={parts.wheels === option ? "default" : "ghost"}
+              variant={parts.wheels === option ? "default" : "secondary"}
             >
               Type {option}
             </Button>
@@ -55,7 +55,7 @@ const Parts = () => {
             <Button
               key={option}
               onClick={() => setParts({ lights: option })}
-              variant={parts.lights === option ? "default" : "ghost"}
+              variant={parts.lights === option ? "default" : "secondary"}
             >
               Type {option}
             </Button>

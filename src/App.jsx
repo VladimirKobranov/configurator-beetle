@@ -24,7 +24,7 @@ function Scene() {
       <ambientLight intensity={0.5} />
       <directionalLight position={[2, 2, 2]} intensity={1} />
       <Beetle ref={beetleRef} />
-      {/* <color attach="background" args={["skyblue"]} /> */}
+      <color attach="background" args={["skyblue"]} />
       <OrbitControls
         minPolarAngle={0}
         maxPolarAngle={Math.PI / 2}
