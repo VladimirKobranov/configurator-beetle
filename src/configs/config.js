@@ -1,15 +1,16 @@
 export const gridConfig = {
   gridSize: [50, 50], //overall size
-  cellSize: 1, // small size
+  cellSize: 0.5, // small size
   cellThickness: 1,
   cellColor: "#6f6f6f",
-  sectionSize: 3, // big cell size
+  sectionSize: 2, // big cell size
   sectionThickness: 1.5,
   sectionColor: "#9d4b4b",
-  fadeDistance: 15,
-  fadeStrength: 1,
+  fadeDistance: 50,
+  fadeStrength: 5,
   followCamera: false,
   infiniteGrid: true,
+  position: [0, -1, 0],
 };
 
 export const cameraConfig = {

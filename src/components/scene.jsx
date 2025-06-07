@@ -1,17 +1,24 @@
 import React, { useRef } from "react";
 
-import { OrbitControls, Stage, PerspectiveCamera } from "@react-three/drei";
+import {
+  OrbitControls,
+  Stage,
+  PerspectiveCamera,
+  Grid,
+} from "@react-three/drei";
 import Beetle from "@/components/Beetle";
 import { useStore } from "@/store";
-import { cameraConfig } from "@/configs/config";
+import { gridConfig, cameraConfig } from "@/configs/config";
 
 const Scene = () => {
   const beetleRef = useRef();
   const rotateSpeed = useStore((state) => state.rotateSpeed);
   const theme = useStore((state) => state.theme);
+  const isGrid = useStore((state) => state.isGrid);
 
   return (
     <>
+      {isGrid && <Grid {...gridConfig} />}
       <PerspectiveCamera makeDefault {...cameraConfig} />
       <color
         attach="background"
