@@ -12,6 +12,9 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
   const isGrid = useStore((state) => state.isGrid);
   const handleGridVisibility = useStore((state) => state.handleGridVisibility);
 
+  // Get current theme from store
+  const theme = useStore((state) => state.theme);
+
   return (
     <div className="space-y-6">
       {/* Auto Rotation Controls */}
@@ -25,7 +28,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
             {rotateSpeed > 0 ? `${rotateSpeed.toFixed(1)}x` : "Off"}
           </Badge>
         </div>
-
         <Slider
           value={[rotateSpeed]}
           max={5}
@@ -33,7 +35,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           onValueChange={([val]) => updateRotateSpeed(val)}
           className="w-full"
         />
-
         <div className="flex justify-between items-center text-xs text-muted-foreground">
           <span>Off</span>
           <span className="font-medium">
@@ -42,7 +43,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           <span>Fast</span>
         </div>
       </div>
-
       <Separator />
 
       {/* Grid Visibility */}
@@ -56,7 +56,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
             {isGrid ? "Visible" : "Hidden"}
           </Badge>
         </div>
-
         <div className="flex items-center justify-between">
           <Label
             htmlFor="grid-toggle"
@@ -71,16 +70,22 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           />
         </div>
       </div>
-
       <Separator />
 
       {/* Theme Toggle */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Monitor className="w-4 h-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Appearance</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Monitor className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-medium">Appearance</span>
+          </div>
+          <Badge
+            variant={theme === "dark" ? "default" : "secondary"}
+            className="text-xs"
+          >
+            {theme === "dark" ? "Dark" : "Light"}
+          </Badge>
         </div>
-
         <div className="flex items-center justify-between">
           <Label className="text-sm text-muted-foreground">
             Toggle light/dark theme
@@ -88,7 +93,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           <ThemeToggle />
         </div>
       </div>
-
       <Separator />
 
       {/* Additional Info */}
