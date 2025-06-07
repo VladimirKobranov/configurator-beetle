@@ -53,7 +53,7 @@ export default function UIOverlay() {
           onClick={() => setIsCollapsed(false)}
           variant="outline"
           size="sm"
-          className="mb-3 backdrop-blur-md bg-white/90 dark:bg-black/90 border-white/20"
+          className="mb-3 backdrop-blur-md bg-white/90 dark:bg-black/90 border-white/20 w-10 h-10"
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
