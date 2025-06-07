@@ -37,10 +37,12 @@ const useStore = create((set) => ({
     set((state) => ({
       parts: { ...state.parts, ...next },
     })),
-  setMaterials: (next) =>
+  setMaterials: (next) => {
+    console.log("update materials:", next);
     set((state) => ({
       materials: { ...state.materials, ...next },
-    })),
+    }));
+  },
   // Booleans
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
   //Theme

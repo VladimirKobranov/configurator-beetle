@@ -3,50 +3,56 @@ import { Check } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
+import { useStore } from "../store"; // adjust path to your zustand store
 import { presetColors } from "@/configs/config";
 
-const ColorCard = ({ color, isSelected, onSelect }) => {
-  return (
-    <div
-      onClick={onSelect}
-      className={`
-        flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all
-        hover:bg-accent hover:border-accent-foreground/20
-        ${isSelected ? "border-primary bg-primary/5" : "border-border"}
-      `}
-    >
-      <Avatar className="w-8 h-8">
-        <AvatarFallback
-          style={{ backgroundColor: color.hex }}
-          className="border-2 border-background"
-        ></AvatarFallback>
-      </Avatar>
-      <div className="flex-grow">
-        <span className="font-medium">{color.name}</span>
-        <div className="text-xs text-muted-foreground">{color.description}</div>
-        <div className="text-xs text-muted-foreground font-mono">
-          {color.hex}
-        </div>
-      </div>
-      {isSelected && <Check className="w-4 h-4 text-primary" />}
+const ColorCard = ({ color, isSelected, onSelect }) => (
+  <div
+    onClick={onSelect}
+    className={
+      `flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all
+       hover:bg-accent hover:border-accent-foreground/20
+       ${isSelected ? "border-primary bg-primary/5" : "border-border"}`
+    }
+  >
+    <Avatar className="w-8 h-8">
+      <AvatarFallback
+        style={{ backgroundColor: color.hex }}
+        className="border-2 border-background"
+      />
+    </Avatar>
+    <div className="flex-grow">
+      <span className="font-medium">{color.name}</span>
+      <div className="text-xs text-muted-foreground">{color.description}</div>
+      <div className="text-xs text-muted-foreground font-mono">{color.hex}</div>
     </div>
-  );
-};
+    {isSelected && <Check className="w-4 h-4 text-primary" />}
+  </div>
+);
 
 const Materials = () => {
   const [selectedColor, setSelectedColor] = useState(null);
+  const setMaterials = useStore((state) => state.setMaterials);
 
   const handleColorSelection = (colorName) => {
     setSelectedColor(colorName);
+    const c = presetColors.find((p) => p.name === colorName);
+    if (c?.material) {
+      const { paintColor, metalness, roughness, clearCoat, clearCoatRoughness } = c.material;
+      setMaterials({
+        color: paintColor,
+        metalness,
+        roughness,
+        clearCoat,
+        clearCoatRoughness,
+      });
+    }
   };
 
-  const selectedColorData = presetColors.find(
-    (color) => color.name === selectedColor,
-  );
+  const selected = presetColors.find((p) => p.name === selectedColor);
 
   return (
-<div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto">
       <h1 className="text-xl font-bold text-center">Materials</h1>
 
       <Tabs defaultValue="presets">
@@ -83,11 +89,10 @@ const Materials = () => {
         </TabsContent>
       </Tabs>
 
-      {/* Selected Section */}
       <div className="bg-muted/50 rounded-lg p-3 mt-2">
         <h4 className="font-semibold mb-2 text-sm">Selected</h4>
-        {selectedColorData ? (
-          <p className="text-sm font-medium">{selectedColorData.name}</p>
+        {selected ? (
+          <p className="text-sm font-medium">{selected.name}</p>
         ) : (
           <p className="text-sm text-muted-foreground">No color selected</p>
         )}

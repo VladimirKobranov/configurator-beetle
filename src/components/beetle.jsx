@@ -7,6 +7,17 @@ const Beetle = forwardRef((props, ref) => {
   const { nodes, materials } = useGLTF("/Beetle_-transformed.glb");
 
   const parts = useStore((state) => state.parts);
+  const mat       = useStore((s) => s.materials);
+
+  const overridePaint = (baseMaterial) => {
+    const m = baseMaterial.clone();
+    m.color.set(mat.color);
+    m.metalness         = mat.metalness;
+    m.roughness         = mat.roughness;
+    m.clearcoat         = mat.clearCoat;
+    m.clearcoatRoughness= mat.clearCoatRoughness;
+    return m;
+  };
 
   const getCustomBodyMeshes = (type) => {
     const validType = Math.max(0, Math.min(2, type));
@@ -18,7 +29,7 @@ const Beetle = forwardRef((props, ref) => {
               castShadow
               receiveShadow
               geometry={nodes.Body_0_1.geometry}
-              material={materials.Paint}
+              material={overridePaint(materials.Paint)}
             />
             <mesh
               castShadow
@@ -53,7 +64,7 @@ const Beetle = forwardRef((props, ref) => {
               castShadow
               receiveShadow
               geometry={nodes.Body_1_2.geometry}
-              material={materials.Paint}
+              material={overridePaint(materials.Paint)}
             />
             <mesh
               castShadow
@@ -82,7 +93,7 @@ const Beetle = forwardRef((props, ref) => {
               castShadow
               receiveShadow
               geometry={nodes.Body_2_2.geometry}
-              material={materials.Paint}
+              material={overridePaint(materials.Paint)}
             />
             <mesh
               castShadow
@@ -153,7 +164,7 @@ const Beetle = forwardRef((props, ref) => {
               castShadow
               receiveShadow
               geometry={nodes.Wheels_2_3.geometry}
-              material={materials.Paint}
+              material={overridePaint(materials.Paint)}
             />
           </>
         );
@@ -251,7 +262,7 @@ const Beetle = forwardRef((props, ref) => {
         castShadow
         receiveShadow
         geometry={nodes.Body_stock_1.geometry}
-        material={materials.Paint}
+        material={overridePaint(materials.Paint)}
       />
       <mesh
         castShadow
