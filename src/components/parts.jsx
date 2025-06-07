@@ -50,7 +50,8 @@ const Parts = () => {
       <div className="mb-2">
         <h3 className="mb-2 text-md font-medium">Lights</h3>
 
-        <div className="grid grid-cols-3 gap-2">
+        {/*<div className="grid grid-cols-3 gap-2"> */}
+        <div className="flex flex-row flex-wrap gap-2">
           {lightOptions.map((option) => (
             <Button
               key={option}
