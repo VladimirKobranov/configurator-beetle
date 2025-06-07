@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useStore } from "../store"; // adjust path to your zustand store
+import { useStore } from "../store"; // adjust as needed
 import { presetColors } from "@/configs/config";
 
 const ColorCard = ({ color, isSelected, onSelect }) => (
   <div
     onClick={onSelect}
-    className={
-      `flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all
-       hover:bg-accent hover:border-accent-foreground/20
-       ${isSelected ? "border-primary bg-primary/5" : "border-border"}`
-    }
+    className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all
+      hover:bg-accent hover:border-accent-foreground/20
+      ${isSelected ? "border-primary bg-primary/5" : "border-border"}`}
   >
     <Avatar className="w-8 h-8">
       <AvatarFallback
@@ -31,8 +29,29 @@ const ColorCard = ({ color, isSelected, onSelect }) => (
 );
 
 const Materials = () => {
+  const currentMaterial = useStore((state) => state.material);
+  const setMaterials = useStore((state) => state.setMaterial);
   const [selectedColor, setSelectedColor] = useState(null);
-  const setMaterials = useStore((state) => state.setMaterials);
+
+  // Preselect material based on store
+  useEffect(() => {
+    if (!currentMaterial) return;
+
+    const match = presetColors.find((p) => {
+      const m = p.material;
+      return (
+        m.paintColor === currentMaterial.color &&
+        m.metalness === currentMaterial.metalness &&
+        m.roughness === currentMaterial.roughness &&
+        m.clearCoat === currentMaterial.clearCoat &&
+        m.clearCoatRoughness === currentMaterial.clearCoatRoughness
+      );
+    });
+
+    if (match) {
+      setSelectedColor(match.name);
+    }
+  }, [currentMaterial]);
 
   const handleColorSelection = (colorName) => {
     setSelectedColor(colorName);

@@ -1,4 +1,9 @@
 import { create } from "zustand";
+import { presetColors } from "@/configs/config"; // Adjust path if needed
+
+// Pick a random material object from the presetColors array
+const randomMaterial =
+  presetColors[Math.floor(Math.random() * presetColors.length)].material;
 
 const useStore = create((set) => ({
   // Model state
@@ -14,13 +19,13 @@ const useStore = create((set) => ({
     lights: 0,
   },
 
-  // Material state
+  // Material state — initialized from randomMaterial
   material: {
-    color: "",
-    roughness: 0,
-    metalness: 0,
-    clearCoat: 0,
-    clearCoatRoughness: 0,
+    color: randomMaterial.paintColor,
+    roughness: randomMaterial.roughness,
+    metalness: randomMaterial.metalness,
+    clearCoat: randomMaterial.clearCoat,
+    clearCoatRoughness: randomMaterial.clearCoatRoughness,
   },
 
   // Other values
@@ -33,19 +38,21 @@ const useStore = create((set) => ({
 
   // Methods
   updateRotateSpeed: (next) => set({ rotateSpeed: next }),
+
   setParts: (next) =>
     set((state) => ({
       parts: { ...state.parts, ...next },
     })),
-  setMaterials: (next) => {
-    console.log("update materials:", next);
+
+  setMaterial: (next) => {
+    console.log("update material:", next);
     set((state) => ({
-      materials: { ...state.materials, ...next },
+      material: { ...state.material, ...next },
     }));
   },
-  // Booleans
+
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
-  //Theme
+
   setTheme: (next) => set({ theme: next }),
 }));
 

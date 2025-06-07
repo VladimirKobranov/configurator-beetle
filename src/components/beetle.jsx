@@ -7,15 +7,15 @@ const Beetle = forwardRef((props, ref) => {
   const { nodes, materials } = useGLTF("/Beetle_-transformed.glb");
 
   const parts = useStore((state) => state.parts);
-  const mat       = useStore((s) => s.materials);
+  const mat = useStore((s) => s.material);
 
   const overridePaint = (baseMaterial) => {
     const m = baseMaterial.clone();
     m.color.set(mat.color);
-    m.metalness         = mat.metalness;
-    m.roughness         = mat.roughness;
-    m.clearcoat         = mat.clearCoat;
-    m.clearcoatRoughness= mat.clearCoatRoughness;
+    m.metalness = mat.metalness;
+    m.roughness = mat.roughness;
+    m.clearcoat = mat.clearCoat;
+    m.clearcoatRoughness = mat.clearCoatRoughness;
     return m;
   };
 
