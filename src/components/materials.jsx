@@ -8,7 +8,6 @@ const presetColors = [
   { name: "Jade green", hex: "#a2a37e" },
   { name: "Arctic", hex: "#d8e4e6" },
   { name: "Ceramic green", hex: "#3e514a" },
-  { name: "Magenta", hex: "#ff00ff" },
 ];
 
 const ColorCard = ({ color, isSelected, onSelect }) => {
