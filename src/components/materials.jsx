@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { Check } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-const presetColors = [
-  { name: "Black", hex: "#1f1f1f" },
-  { name: "Jade green", hex: "#a2a37e" },
-  { name: "Arctic", hex: "#d8e4e6" },
-  { name: "Ceramic green", hex: "#3e514a" },
-];
+import { presetColors } from "@/configs/config";
 
 const ColorCard = ({ color, isSelected, onSelect }) => {
   return (
@@ -26,63 +22,75 @@ const ColorCard = ({ color, isSelected, onSelect }) => {
           className="border-2 border-background"
         ></AvatarFallback>
       </Avatar>
-
       <div className="flex-grow">
         <span className="font-medium">{color.name}</span>
+        <div className="text-xs text-muted-foreground">{color.description}</div>
         <div className="text-xs text-muted-foreground font-mono">
           {color.hex}
         </div>
       </div>
-
       {isSelected && <Check className="w-4 h-4 text-primary" />}
     </div>
   );
 };
 
 const Materials = () => {
-  const [parts, setParts] = useState({
-    body: null,
-  });
+  const [selectedColor, setSelectedColor] = useState(null);
 
   const handleColorSelection = (colorName) => {
-    setParts((prev) => ({
-      ...prev,
-      body: colorName,
-    }));
+    setSelectedColor(colorName);
   };
 
+  const selectedColorData = presetColors.find(
+    (color) => color.name === selectedColor,
+  );
+
   return (
-    <div className="flex flex-col gap-2">
+<div className="w-full max-w-md mx-auto">
       <h1 className="text-xl font-bold text-center">Materials</h1>
-      <div className="mb-2">
-        <h3 className="mb-2 text-md font-medium">Body</h3>
-        <Tabs defaultValue="presets">
-          <TabsList className="flex w-full">
-            <TabsTrigger value="presets" className="flex-1">
-              Presets
-            </TabsTrigger>
-            <TabsTrigger value="custom" className="flex-1">
-              Custom
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="presets">
-            <div className="flex flex-col gap-2">
+
+      <Tabs defaultValue="presets">
+        <TabsList className="flex w-full">
+          <TabsTrigger value="presets" className="flex-1">
+            Presets
+          </TabsTrigger>
+          <TabsTrigger value="custom" className="flex-1">
+            Custom
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="presets">
+          <ScrollArea className="h-[400px] w-full">
+            <div className="flex flex-col gap-2 pr-4">
               {presetColors.map((color) => (
                 <ColorCard
                   key={color.name}
                   color={color}
-                  isSelected={parts.body === color.name}
+                  isSelected={selectedColor === color.name}
                   onSelect={() => handleColorSelection(color.name)}
                 />
               ))}
             </div>
-          </TabsContent>
-          <TabsContent value="custom">
-            <div className="flex flex-col gap-2">
-              <p>Custom color selection controls go here.</p>
-            </div>
-          </TabsContent>
-        </Tabs>
+          </ScrollArea>
+        </TabsContent>
+
+        <TabsContent value="custom">
+          <div className="flex flex-col gap-2 p-4 border rounded-lg">
+            <p className="text-muted-foreground">
+              Custom color selection controls will be available here.
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Selected Section */}
+      <div className="bg-muted/50 rounded-lg p-3 mt-2">
+        <h4 className="font-semibold mb-2 text-sm">Selected</h4>
+        {selectedColorData ? (
+          <p className="text-sm font-medium">{selectedColorData.name}</p>
+        ) : (
+          <p className="text-sm text-muted-foreground">No color selected</p>
+        )}
       </div>
     </div>
   );

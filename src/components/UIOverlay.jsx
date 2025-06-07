@@ -18,7 +18,7 @@ export default function UIOverlay() {
   };
 
   return (
-    <div className="absolute top-0 left-0 z-10 m-4 columns-md ">
+    <div className="absolute top-0 left-0 z-10 m-4 columns-md max-w-md">
       <div className="text-left space-y-4 backdrop-blur p-6 rounded-xl shadow-lg mb-2 bg-white dark:bg-black">
         <h1 className="text-xl font-bold text-center">Car configurator</h1>
 

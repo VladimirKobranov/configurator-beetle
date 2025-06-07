@@ -39,3 +39,26 @@ export const partOptions = {
     { id: 5, name: "Laser", description: "Premium laser headlights" },
   ],
 };
+
+export const presetColors = [
+  { name: "Black", hex: "#1f1f1f", description: "Classic deep black" },
+  {
+    name: "Yukon Yellow",
+    hex: "#ffd700",
+    description: "Bright sunshine yellow",
+  },
+  { name: "Clementine", hex: "#ff8c00", description: "Vibrant orange" },
+  { name: "Royal Red", hex: "#dc143c", description: "Deep royal red" },
+  {
+    name: "Diamond Blue",
+    hex: "#4682b4",
+    description: "Sparkling blue metallic",
+  },
+  { name: "Poppy Red", hex: "#ff6347", description: "Bright poppy red" },
+  { name: "Elm Green", hex: "#228b22", description: "Natural elm green" },
+  { name: "Savannah Beige", hex: "#f5deb3", description: "Warm desert beige" },
+  { name: "Cobalt Blue", hex: "#0047ab", description: "Deep cobalt blue" },
+  { name: "Deep Sea Green", hex: "#2e8b57", description: "Ocean depth green" },
+  { name: "Chinchilla", hex: "#a0a0a4", description: "Soft gray metallic" },
+  { name: "Pastel White", hex: "#f8f8ff", description: "Pure pastel white" },
+];
