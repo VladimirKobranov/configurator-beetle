@@ -25,33 +25,6 @@ const ColorPicker = ({ color, onChange }) => {
   );
 };
 
-// Slider component with label and value display
-const CustomSlider = ({
-  label,
-  value,
-  onChange,
-  min = 0,
-  max = 1,
-  step = 0.01,
-}) => (
-  <div className="space-y-2">
-    <div className="flex justify-between items-center">
-      <Label className="text-sm font-medium">{label}</Label>
-      <span className="text-sm text-muted-foreground font-mono">
-        {value.toFixed(2)}
-      </span>
-    </div>
-    <Slider
-      value={[value]}
-      onValueChange={(values) => onChange(values[0])}
-      min={min}
-      max={max}
-      step={step}
-      className="w-full"
-    />
-  </div>
-);
-
 const ColorCard = ({ color, isSelected, onSelect }) => (
   <div
     onClick={onSelect}
@@ -211,43 +184,83 @@ const Materials = () => {
 
             {/* Material Properties */}
             <div className="space-y-4">
-              <CustomSlider
-                label="Metalness"
-                value={customMaterial.metalness}
-                onChange={(value) => updateCustomMaterial("metalness", value)}
-                min={0}
-                max={1}
-                step={0.01}
-              />
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label className="text-sm font-medium">Metalness</Label>
+                  <span className="text-sm text-muted-foreground font-mono">
+                    {customMaterial.metalness.toFixed(2)}
+                  </span>
+                </div>
+                <Slider
+                  value={[customMaterial.metalness]}
+                  onValueChange={(values) =>
+                    updateCustomMaterial("metalness", values[0])
+                  }
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  className="w-full"
+                />
+              </div>
 
-              <CustomSlider
-                label="Roughness"
-                value={customMaterial.roughness}
-                onChange={(value) => updateCustomMaterial("roughness", value)}
-                min={0}
-                max={1}
-                step={0.01}
-              />
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label className="text-sm font-medium">Roughness</Label>
+                  <span className="text-sm text-muted-foreground font-mono">
+                    {customMaterial.roughness.toFixed(2)}
+                  </span>
+                </div>
+                <Slider
+                  value={[customMaterial.roughness]}
+                  onValueChange={(values) =>
+                    updateCustomMaterial("roughness", values[0])
+                  }
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  className="w-full"
+                />
+              </div>
 
-              <CustomSlider
-                label="Clear Coat"
-                value={customMaterial.clearCoat}
-                onChange={(value) => updateCustomMaterial("clearCoat", value)}
-                min={0}
-                max={1}
-                step={0.01}
-              />
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label className="text-sm font-medium">Clear Coat</Label>
+                  <span className="text-sm text-muted-foreground font-mono">
+                    {customMaterial.clearCoat.toFixed(2)}
+                  </span>
+                </div>
+                <Slider
+                  value={[customMaterial.clearCoat]}
+                  onValueChange={(values) =>
+                    updateCustomMaterial("clearCoat", values[0])
+                  }
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  className="w-full"
+                />
+              </div>
 
-              <CustomSlider
-                label="Clear Coat Roughness"
-                value={customMaterial.clearCoatRoughness}
-                onChange={(value) =>
-                  updateCustomMaterial("clearCoatRoughness", value)
-                }
-                min={0}
-                max={1}
-                step={0.01}
-              />
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <Label className="text-sm font-medium">
+                    Clear Coat Roughness
+                  </Label>
+                  <span className="text-sm text-muted-foreground font-mono">
+                    {customMaterial.clearCoatRoughness.toFixed(2)}
+                  </span>
+                </div>
+                <Slider
+                  value={[customMaterial.clearCoatRoughness]}
+                  onValueChange={(values) =>
+                    updateCustomMaterial("clearCoatRoughness", values[0])
+                  }
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  className="w-full"
+                />
+              </div>
             </div>
 
             {/* Preview */}

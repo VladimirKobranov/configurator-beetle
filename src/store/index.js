@@ -45,7 +45,6 @@ const useStore = create((set) => ({
     })),
 
   setMaterial: (next) => {
-    console.log("update material:", next);
     set((state) => ({
       material: { ...state.material, ...next },
     }));
