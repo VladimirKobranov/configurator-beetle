@@ -1,4 +1,4 @@
-import { useTheme } from "@/hooks/UseTheme";
+import { useTheme } from "@/hooks/useTheme";
 import { Switch } from "@/components/ui/switch";
 
 export function ThemeToggle() {
