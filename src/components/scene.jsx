@@ -6,7 +6,7 @@ import {
   PerspectiveCamera,
   Grid,
 } from "@react-three/drei";
-import Beetle from "@/components/Beetle";
+import Beetle from "@/components/beetle";
 import { useStore } from "@/store";
 import { gridConfig, cameraConfig } from "@/configs/config";
 
