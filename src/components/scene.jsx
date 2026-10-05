@@ -10,7 +10,7 @@ import Beetle from "@/components/beetle";
 import { useStore } from "@/store";
 import { gridConfig, cameraConfig } from "@/configs/config";
 
-const Scene = () => {
+const Scene = ({ onReady }) => {
   const beetleRef = useRef();
   const rotateSpeed = useStore((state) => state.rotateSpeed);
   const isGrid = useStore((state) => state.isGrid);
@@ -26,6 +26,10 @@ const Scene = () => {
     observer.observe(root, { attributes: true, attributeFilter: ["class"] });
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   return (
     <>
