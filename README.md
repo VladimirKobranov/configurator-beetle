@@ -1,6 +1,6 @@
 # Car Configurator
 
-A 3D car configurator built with React, Vite, Zustand, Tailwind CSS, and Radix UI.  
+A 3D car configurator built with React, Vite, Zustand, Tailwind CSS, and Shadcn-ui.  
 Users can customize a classic Beetle car model in real-time, changing its parts, materials, and appearance.
 
 ## Features
@@ -9,7 +9,7 @@ Users can customize a classic Beetle car model in real-time, changing its parts,
 - **Customizable Parts:** Change body style, wheels, and lights.
 - **Material Presets & Customization:** Choose from preset colors or fine-tune paint, metalness, roughness, and clear coat.
 - **Theme Toggle:** Switch between light and dark mode.
-- **UI Components:** Modern UI with [Radix UI](https://www.radix-ui.com/) and [Lucide icons](https://lucide.dev/).
+- **UI Components:** Modern UI with [Shadcn-ui](https://ui.shadcn.com/) and [Lucide icons](https://lucide.dev/).
 - **State Management:** Powered by [Zustand](https://zustand-demo.pmnd.rs/).
 
 ## Project Structure
