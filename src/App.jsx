@@ -1,17 +1,19 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import UIOverlay from "./components/UIOverlay";
 import { ThemeToggle } from "./components/themeToggler";
 import Footer from "./components/Footer";
 import packageJson from "../package.json";
 
-import Scene from "./components/scene";
+const Scene = lazy(() => import("./components/scene"));
 
 function App() {
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      <Canvas className="absolute inset-0 z-0" shadows>
-        <Scene />
+      <Canvas className="absolute inset-0 z-0" shadows dpr={[1, 1.5]}>
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </Canvas>
       <UIOverlay />
       <div className="absolute bottom-4 right-4 z-10">

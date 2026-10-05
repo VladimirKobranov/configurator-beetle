@@ -132,6 +132,7 @@ export default function UIOverlay() {
               size="sm"
               onClick={() => setTab("default")}
               className="h-8 w-8 p-0"
+              aria-label={`Close ${tabConfig.find((item) => item.id === tab)?.label ?? "panel"}`}
             >
               <X className="w-4 h-4" />
             </Button>
