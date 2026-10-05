@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Check, Palette, Settings } from "lucide-react";
+import { Palette, Settings } from "lucide-react";
 import { Colorful } from "@uiw/react-color";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -73,7 +73,6 @@ const ColorCard = ({ color, isSelected, onSelect }) => (
         className="border-2 border-background"
       />
     </Avatar>
-    {isSelected && <Check className="size-4 text-primary-foreground" />}
   </SelectableCard>
 );
 
