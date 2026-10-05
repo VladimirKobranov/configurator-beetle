@@ -129,7 +129,12 @@ html[data-theme-switching] *::after {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply select-none bg-background text-foreground;
+  }
+  input,
+  textarea,
+  [contenteditable="true"] {
+    @apply select-text;
   }
   html {
     @apply font-sans;

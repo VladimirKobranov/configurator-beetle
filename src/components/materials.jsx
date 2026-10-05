@@ -14,6 +14,7 @@ import SelectableCard from "@/components/SelectableCard";
 
 const ColorPicker = ({ color, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hexValue, setHexValue] = useState(color.toUpperCase());
   const pickerRef = useRef(null);
 
   useEffect(() => {
@@ -42,10 +43,11 @@ const ColorPicker = ({ color, onChange }) => {
           className="h-10 w-12 cursor-pointer p-1"
         />
         <Input
-          value={color.toUpperCase()}
+          value={hexValue}
           aria-label="Hex color value"
           onChange={(event) => {
             const nextColor = event.target.value;
+            setHexValue(nextColor.toUpperCase());
             if (/^#[0-9A-F]{6}$/i.test(nextColor)) onChange(nextColor);
           }}
           className="font-mono uppercase"
@@ -53,7 +55,13 @@ const ColorPicker = ({ color, onChange }) => {
       </div>
       {isOpen && (
         <div className="absolute left-0 top-12 z-20 rounded-lg border border-border bg-card p-2 shadow-lg">
-          <Colorful color={color} onChange={({ hex }) => onChange(hex)} />
+          <Colorful
+            color={color}
+            onChange={({ hex }) => {
+              setHexValue(hex.toUpperCase());
+              onChange(hex);
+            }}
+          />
         </div>
       )}
     </div>
