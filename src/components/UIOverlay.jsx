@@ -1,5 +1,5 @@
 import { useStore } from "@/store";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Drawer,
@@ -138,6 +138,15 @@ export default function UIOverlay() {
   const closeMenu = () => setIsCollapsed(true);
   const selectTab = (value) =>
     setTab((current) => (current === value ? "default" : value));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCollapsed(window.innerWidth < 640);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <>
