@@ -197,7 +197,7 @@ export default function UIOverlay() {
                 />
               </div>
             </div>
-            <DrawerFooter>
+            <DrawerFooter className="items-center">
               <ThemeToggle />
             </DrawerFooter>
           </DrawerContent>
