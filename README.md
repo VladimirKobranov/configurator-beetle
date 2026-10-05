@@ -1,58 +1,92 @@
 # Car Configurator
+<sub>Version 2.0.0</sub>
 
-A 3D car configurator built with React, Vite, Zustand, Tailwind CSS, and Shadcn-ui.  
-Users can customize a classic Beetle car model in real-time, changing its parts, materials, and appearance.
+Interactive 3D Beetle configurator built with React, Vite, Three.js, React Three Fiber, Zustand, Tailwind CSS, and shadcn/ui.
+
+![Car Configurator preview](./pics/screenshot.png)
 
 ## Features
 
-- **3D Car Model:** Interactive visualization using [three.js](https://threejs.org/) via [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) and [@react-three/drei](https://github.com/pmndrs/drei).
-- **Customizable Parts:** Change body style, wheels, and lights.
-- **Material Presets & Customization:** Choose from preset colors or fine-tune paint, metalness, roughness, and clear coat.
-- **Theme Toggle:** Switch between light and dark mode.
-- **UI Components:** Modern UI with [Shadcn-ui](https://ui.shadcn.com/) and [Lucide icons](https://lucide.dev/).
-- **State Management:** Powered by [Zustand](https://zustand-demo.pmnd.rs/).
+- Interactive Beetle 3D model with orbit controls and optional auto-rotation.
+- Body, wheel, and headlight configuration.
+- Preset materials and custom paint settings.
+- Custom color picker with HEX input.
+- Light, dark, and system themes with persisted theme preference.
+- Responsive floating configuration menu for desktop and mobile layouts.
+- Unified loading screen shown until 3D assets are ready.
+- Error state with reload action when the 3D scene cannot load.
+- Footer with project version and GitHub link.
 
-## Project Structure
+## Stack
 
+- React 19 + Vite
+- Three.js, `@react-three/fiber`, and `@react-three/drei`
+- Zustand
+- Tailwind CSS 4
+- shadcn/ui and Radix UI
+- Lucide React icons
+- `@uiw/react-color`
+
+## Requirements
+
+- Node.js 20 or newer
+- npm
+
+## Getting started
+
+Install dependencies:
+
+```bash
+npm install
 ```
-src/
-  App.jsx                # Main app entry
-  main.jsx               # React root
-  index.css              # Tailwind & theme styles
-  components/            # UI and 3D components
-  configs/config.js      # Configurations for parts, colors, grid, camera
-  hooks/                 # Custom React hooks
-  lib/                   # Utility functions
-  store/                 # Zustand store
-public/                  # Static assets (GLB model, icons)
+
+Start the development server:
+
+```bash
+npm run dev
 ```
 
-## Getting Started
-
-1. **Install dependencies:**
-   ```sh
-   npm install
-   ```
-
-2. **Start the development server:**
-   ```sh
-   npm run dev
-   ```
-
-3. **Open [http://localhost:5173](http://localhost:5173) in your browser.**
+Open `http://localhost:3000` in your browser. The port can be changed with `VITE_PORT` in `.env`.
 
 ## Scripts
 
-- `npm run dev` — Start development server
-- `npm run build` — Build for production
-- `npm run lint` — Run ESLint
-- `npm run preview` — Preview production build
+| Command           | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `npm run dev`     | Start the Vite development server                        |
+| `npm run build`   | Create a production build                                |
+| `npm run preview` | Serve the production build locally                       |
+| `npm run lint`    | Run ESLint                                               |
+| `npm run format`  | Format source and root configuration files with Prettier |
 
-## License
+## Project structure
 
-MIT
+```text
+src/
+  App.jsx                    # Application shell and loading flow
+  components/
+    SceneCanvas.jsx          # Lazy-loaded 3D canvas
+    scene.jsx                # Camera, lights, grid, and controls
+    beetle.jsx               # Beetle model and configuration logic
+    UIOverlay.jsx            # Main configurator UI
+    AppLoader.jsx            # Initial loading and error states
+    ui/                      # shadcn/ui components
+  configs/config.js          # Parts, colors, camera, and grid settings
+  hooks/                     # Theme hook
+  store/                     # Zustand state
+public/
+  Beetle_-transformed.glb    # 3D model asset
+blender/
+  beetle.blend               # Blender source file
+```
 
----
+## Production check
 
-**About:**  
-This project demonstrates a modern, interactive 3D product configurator using the latest React ecosystem tools. It is suitable as a template or starting point for similar visualization/configuration apps.
+Before committing changes, run:
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+The current project version is `2.0.0` and is read from `package.json`.
