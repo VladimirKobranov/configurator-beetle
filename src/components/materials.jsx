@@ -67,7 +67,7 @@ const ColorCard = ({ color, isSelected, onSelect }) => (
     selected={isSelected}
     onSelect={onSelect}
   >
-    <Avatar className="w-8 h-8">
+    <Avatar className="h-8 w-8 shrink-0 self-center">
       <AvatarFallback
         style={{ backgroundColor: color.hex }}
         className="border-2 border-background"
