@@ -2,6 +2,7 @@ import React from "react";
 import { Canvas } from "@react-three/fiber";
 import UIOverlay from "./components/UIOverlay";
 import { ThemeToggle } from "./components/themeToggler";
+import Footer from "./components/Footer";
 import packageJson from "../package.json";
 
 import Scene from "./components/scene";
@@ -15,6 +16,9 @@ function App() {
       <UIOverlay />
       <div className="absolute bottom-4 right-4 z-10">
         <ThemeToggle />
+      </div>
+      <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
+        <Footer />
       </div>
       <span className="absolute bottom-4 left-4 z-10 text-[10px] text-muted-foreground/50">
         v{packageJson.version}

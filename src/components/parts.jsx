@@ -8,7 +8,7 @@ import { partOptions } from "@/configs/config";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const PartSection = ({ options, currentValue, onSelect }) => (
-  <div className="space-y-3">
+  <div className="space-y-4">
     <div className="grid grid-cols-2 gap-2">
       {options.map((option) => (
         <Button
@@ -40,11 +40,6 @@ const Parts = () => {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <h1 className="text-xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-        <Car className="w-5 h-5" />
-        Car Parts Configuration
-      </h1>
-
       <Tabs defaultValue="body" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="body" className="flex items-center gap-1">

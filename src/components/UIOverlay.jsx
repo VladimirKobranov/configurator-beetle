@@ -57,24 +57,24 @@ export default function UIOverlay() {
           <ChevronRight className="h-4 w-4" />
         </Button>
       ) : (
-        <div className="mb-3 rounded-xl border border-border bg-card/90 p-6 text-card-foreground shadow-lg backdrop-blur-md">
+        <div className="mb-3 rounded-xl border border-border bg-card/90 p-4 text-card-foreground shadow-lg backdrop-blur-md">
           {/* Main UI block with title */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold">Car Configurator</h1>
-          <Button
-            onClick={() => setIsCollapsed((collapsed) => !collapsed)}
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0"
-            aria-label={isCollapsed ? "Expand menu" : "Collapse menu"}
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-        </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold">Car Configurator</h1>
+            <Button
+              onClick={() => setIsCollapsed((collapsed) => !collapsed)}
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              aria-label={isCollapsed ? "Expand menu" : "Collapse menu"}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+          </div>
 
-        <div className="mt-4 space-y-4">
-          {/* Tab Navigation */}
-          <div className="space-y-2">
+          <div className="mt-4 space-y-4">
+            {/* Tab Navigation */}
+            <div className="space-y-2">
               <h3 className="text-sm font-medium text-muted-foreground">
                 Customize
               </h3>
@@ -104,50 +104,50 @@ export default function UIOverlay() {
                   </Button>
                 ))}
               </div>
+            </div>
           </div>
-        </div>
         </div>
       )}
 
       {/* Content Panel */}
       {!isCollapsed && tab !== "default" && (
-            <div className="bg-card/90 text-card-foreground backdrop-blur-md rounded-xl shadow-lg border border-border overflow-hidden">
-              {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-border/50">
-                <h2 className="font-semibold flex items-center gap-2">
-                  {(() => {
-                    const currentTab = tabConfig.find((t) => t.id === tab);
-                    const Icon = currentTab?.icon;
-                    return (
-                      <>
-                        {Icon && <Icon className="w-4 h-4" />}
-                        {currentTab?.label}
-                      </>
-                    );
-                  })()}
-                </h2>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setTab("default")}
-                  className="h-8 w-8 p-0"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
+        <div className="bg-card/90 text-card-foreground backdrop-blur-md rounded-xl shadow-lg border border-border overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-border/50">
+            <h2 className="font-semibold flex items-center gap-2">
+              {(() => {
+                const currentTab = tabConfig.find((t) => t.id === tab);
+                const Icon = currentTab?.icon;
+                return (
+                  <>
+                    {Icon && <Icon className="w-4 h-4" />}
+                    {currentTab?.label}
+                  </>
+                );
+              })()}
+            </h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setTab("default")}
+              className="h-8 w-8 p-0"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
 
-              {/* Content */}
-              <div className="p-4">
-                {tab === "material" && <Materials />}
-                {tab === "parts" && <Parts />}
-                {tab === "extra" && (
-                  <Extra
-                    rotateSpeed={rotateSpeed}
-                    updateRotateSpeed={updateRotateSpeed}
-                  />
-                )}
-              </div>
-            </div>
+          {/* Content */}
+          <div className="p-4">
+            {tab === "material" && <Materials />}
+            {tab === "parts" && <Parts />}
+            {tab === "extra" && (
+              <Extra
+                rotateSpeed={rotateSpeed}
+                updateRotateSpeed={updateRotateSpeed}
+              />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

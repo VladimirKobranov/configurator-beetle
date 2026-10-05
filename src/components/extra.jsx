@@ -12,9 +12,9 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
   const handleGridVisibility = useStore((state) => state.handleGridVisibility);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Auto Rotation Controls */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <RotateCw className="w-4 h-4 text-muted-foreground" />
@@ -42,7 +42,7 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
       <Separator />
 
       {/* Grid Visibility */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Grid3X3 className="w-4 h-4 text-muted-foreground" />

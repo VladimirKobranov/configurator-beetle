@@ -52,10 +52,7 @@ const ColorPicker = ({ color, onChange }) => {
       </div>
       {isOpen && (
         <div className="absolute left-0 top-12 z-20 rounded-lg border border-border bg-card p-2 shadow-lg">
-          <Colorful
-            color={color}
-            onChange={({ hex }) => onChange(hex)}
-          />
+          <Colorful color={color} onChange={({ hex }) => onChange(hex)} />
         </div>
       )}
     </div>
@@ -144,8 +141,6 @@ const Materials = () => {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <h1 className="text-xl font-bold text-center mb-4">Materials</h1>
-
       <Tabs defaultValue="presets">
         <TabsList className="flex w-full">
           <TabsTrigger
@@ -180,7 +175,7 @@ const Materials = () => {
         </TabsContent>
 
         <TabsContent value="custom">
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Color Picker */}
             <div className="space-y-2">
               <Label className="text-sm font-medium">Paint Color</Label>
@@ -270,7 +265,6 @@ const Materials = () => {
                 />
               </div>
             </div>
-
           </div>
         </TabsContent>
       </Tabs>
