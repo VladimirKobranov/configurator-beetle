@@ -1,11 +1,11 @@
-import React, { Component, lazy, Suspense, useCallback, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Component, lazy, useCallback, useState } from "react";
 import UIOverlay from "./components/UIOverlay";
 import { ThemeToggle } from "./components/themeToggler";
 import Footer from "./components/Footer";
 import packageJson from "../package.json";
+import AppLoader from "./components/AppLoader";
 
-const Scene = lazy(() => import("./components/scene"));
+const SceneCanvas = lazy(() => import("./components/SceneCanvas"));
 
 class SceneErrorBoundary extends Component {
   state = { hasError: false };
@@ -31,44 +31,30 @@ function App() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      <Canvas
-        className="absolute inset-0 z-0"
-        shadows
-        dpr={[1, 1.5]}
-        fallback={
-          <div className="grid h-full place-items-center bg-background p-6 text-sm text-muted-foreground">
-            3D preview is unavailable in this browser.
-          </div>
-        }
+      <SceneErrorBoundary
+        onError={() => setSceneError(true)}
+        fallback={<AppLoader error />}
       >
-        <SceneErrorBoundary
-          onError={() => setSceneError(true)}
-          fallback={
-            <div className="grid h-full place-items-center bg-background p-6 text-sm text-muted-foreground">
-              3D preview could not be loaded.
-            </div>
-          }
-        >
-          <Suspense fallback={null}>
-            <Scene onReady={markSceneReady} />
-          </Suspense>
-        </SceneErrorBoundary>
-      </Canvas>
-      {!sceneReady && !sceneError && (
-        <div className="pointer-events-none absolute inset-0 z-[1] grid place-items-center text-sm text-muted-foreground">
-          Loading 3d assets
+        <SceneCanvas onReady={markSceneReady} />
+      </SceneErrorBoundary>
+      {sceneReady && !sceneError ? (
+        <>
+          <UIOverlay />
+          <div className="absolute right-2 bottom-2 z-10 sm:right-4 sm:bottom-4">
+            <ThemeToggle />
+          </div>
+          <div className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 sm:bottom-4">
+            <Footer />
+          </div>
+          <span className="absolute bottom-2 left-2 z-10 text-[10px] text-muted-foreground/50 sm:bottom-4 sm:left-4">
+            v{packageJson.version}
+          </span>
+        </>
+      ) : (
+        <div className="absolute inset-0 z-10">
+          <AppLoader error={sceneError} />
         </div>
       )}
-      <UIOverlay />
-      <div className="absolute right-2 bottom-2 z-10 sm:right-4 sm:bottom-4">
-        <ThemeToggle />
-      </div>
-      <div className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 sm:bottom-4">
-        <Footer />
-      </div>
-      <span className="absolute bottom-2 left-2 z-10 text-[10px] text-muted-foreground/50 sm:bottom-4 sm:left-4">
-        v{packageJson.version}
-      </span>
     </div>
   );
 }
