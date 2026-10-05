@@ -217,7 +217,12 @@ export default function UIOverlay() {
                 </div>
               </div>
               <DrawerFooter className="items-center">
-                <ThemeToggle />
+                <div
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <ThemeToggle />
+                </div>
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
