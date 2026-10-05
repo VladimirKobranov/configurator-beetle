@@ -56,7 +56,7 @@ function App() {
       </Canvas>
       {!sceneReady && !sceneError && (
         <div className="pointer-events-none absolute inset-0 z-[1] grid place-items-center text-sm text-muted-foreground">
-          Loading 3D preview…
+          Loading 3d assets
         </div>
       )}
       <UIOverlay />
