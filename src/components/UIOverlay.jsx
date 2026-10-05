@@ -144,14 +144,15 @@ export default function UIOverlay() {
     setTab((current) => (current === value ? "default" : value));
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleViewportChange = () => {
       const mobile = isMobileViewport();
       setIsMobile(mobile);
       setIsCollapsed(mobile);
     };
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    mediaQuery.addEventListener("change", handleViewportChange);
+    return () => mediaQuery.removeEventListener("change", handleViewportChange);
   }, []);
 
   return (
