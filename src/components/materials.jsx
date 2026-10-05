@@ -1,26 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Check, Palette, Settings } from "lucide-react";
+import { Colorful } from "@uiw/react-color";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { useStore } from "../store"; // adjust as needed
 import { presetColors } from "@/configs/config";
 
-// Color picker component (simplified version)
 const ColorPicker = ({ color, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const pickerRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const handleOutsidePointerDown = (event) => {
+      if (!pickerRef.current?.contains(event.target)) setIsOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handleOutsidePointerDown);
+    return () =>
+      document.removeEventListener("pointerdown", handleOutsidePointerDown);
+  }, [isOpen]);
+
   return (
-    <div className="space-y-3">
-      <input
-        type="color"
-        value={color}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full h-12 rounded-lg border border-border cursor-pointer"
-      />
-      <div className="text-xs font-mono text-muted-foreground text-center">
-        {color.toUpperCase()}
+    <div ref={pickerRef} className="relative space-y-3">
+      <div className="flex items-center gap-2">
+        <Input
+          type="color"
+          value={color}
+          aria-label="Open color picker"
+          onClick={(event) => {
+            event.preventDefault();
+            setIsOpen((open) => !open);
+          }}
+          className="h-10 w-12 cursor-pointer p-1"
+        />
+        <Input
+          value={color.toUpperCase()}
+          aria-label="Hex color value"
+          onChange={(event) => {
+            const nextColor = event.target.value;
+            if (/^#[0-9A-F]{6}$/i.test(nextColor)) onChange(nextColor);
+          }}
+          className="font-mono uppercase"
+        />
       </div>
+      {isOpen && (
+        <div className="absolute left-0 top-12 z-20 rounded-lg border border-border bg-card p-2 shadow-lg">
+          <Colorful
+            color={color}
+            onChange={({ hex }) => onChange(hex)}
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -50,52 +87,25 @@ const ColorCard = ({ color, isSelected, onSelect }) => (
 const Materials = () => {
   const currentMaterial = useStore((state) => state.material);
   const setMaterials = useStore((state) => state.setMaterial);
-  const [selectedColor, setSelectedColor] = useState(null);
-
-  // Custom material state
-  const [customMaterial, setCustomMaterial] = useState({
-    paintColor: "#ff0000",
-    metalness: 0.5,
-    roughness: 0.5,
-    clearCoat: 0.5,
-    clearCoatRoughness: 0.1,
-  });
-
-  // Preselect material based on store
-  useEffect(() => {
-    if (!currentMaterial) return;
-
-    const match = presetColors.find((p) => {
-      const m = p.material;
-      return (
-        m.paintColor === currentMaterial.color &&
-        m.metalness === currentMaterial.metalness &&
-        m.roughness === currentMaterial.roughness &&
-        m.clearCoat === currentMaterial.clearCoat &&
-        m.clearCoatRoughness === currentMaterial.clearCoatRoughness
-      );
-    });
-
-    if (match) {
-      setSelectedColor(match.name);
-    }
-  }, [currentMaterial]);
-
-  // Update custom material when current material changes
-  useEffect(() => {
-    if (currentMaterial) {
-      setCustomMaterial({
-        paintColor: currentMaterial.color || "#ff0000",
-        metalness: currentMaterial.metalness || 0.5,
-        roughness: currentMaterial.roughness || 0.5,
-        clearCoat: currentMaterial.clearCoat || 0.5,
-        clearCoatRoughness: currentMaterial.clearCoatRoughness || 0.1,
-      });
-    }
-  }, [currentMaterial]);
+  const customMaterial = {
+    paintColor: currentMaterial.color || "#ff0000",
+    metalness: currentMaterial.metalness ?? 0.5,
+    roughness: currentMaterial.roughness ?? 0.5,
+    clearCoat: currentMaterial.clearCoat ?? 0.5,
+    clearCoatRoughness: currentMaterial.clearCoatRoughness ?? 0.1,
+  };
+  const selectedColor = presetColors.find((p) => {
+    const m = p.material;
+    return (
+      m.paintColor === currentMaterial.color &&
+      m.metalness === currentMaterial.metalness &&
+      m.roughness === currentMaterial.roughness &&
+      m.clearCoat === currentMaterial.clearCoat &&
+      m.clearCoatRoughness === currentMaterial.clearCoatRoughness
+    );
+  })?.name;
 
   const handleColorSelection = (colorName) => {
-    setSelectedColor(colorName);
     const c = presetColors.find((p) => p.name === colorName);
     if (c?.material) {
       const {
@@ -117,7 +127,6 @@ const Materials = () => {
 
   const updateCustomMaterial = (property, value) => {
     const newMaterial = { ...customMaterial, [property]: value };
-    setCustomMaterial(newMaterial);
 
     // Update the store
     setMaterials({
@@ -129,7 +138,6 @@ const Materials = () => {
     });
 
     // Clear preset selection when using custom
-    setSelectedColor(null);
   };
 
   const selected = presetColors.find((p) => p.name === selectedColor);
@@ -263,42 +271,22 @@ const Materials = () => {
               </div>
             </div>
 
-            {/* Preview */}
-            <div className="p-4 border rounded-lg bg-muted/30">
-              <div className="flex items-center gap-3">
-                <Avatar className="w-10 h-10">
-                  <AvatarFallback
-                    style={{ backgroundColor: customMaterial.paintColor }}
-                    className="border-2 border-background"
-                  />
-                </Avatar>
-                <div>
-                  <p className="font-medium">Custom Material</p>
-                  <p className="text-xs text-muted-foreground font-mono">
-                    {customMaterial.paintColor.toUpperCase()}
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </TabsContent>
       </Tabs>
 
-      <div className="bg-muted/50 rounded-lg p-3 mt-2">
-        <h4 className="font-semibold mb-2 text-sm">Selected</h4>
+      <Separator className="my-4" />
+      <div className="space-y-1">
+        <p className="text-sm font-medium">Selected</p>
         {selected ? (
           <p className="text-sm font-medium">{selected.name}</p>
-        ) : selectedColor === null && customMaterial ? (
+        ) : (
           <div className="space-y-1">
-            <p className="text-sm font-medium">Custom Material</p>
-            <p className="text-xs text-muted-foreground">
-              M: {customMaterial.metalness.toFixed(2)} | R:{" "}
-              {customMaterial.roughness.toFixed(2)} | CC:{" "}
-              {customMaterial.clearCoat.toFixed(2)}
+            <p className="text-sm text-muted-foreground">Custom color</p>
+            <p className="text-xs font-mono text-muted-foreground">
+              {customMaterial.paintColor.toUpperCase()}
             </p>
           </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">No color selected</p>
         )}
       </div>
     </div>

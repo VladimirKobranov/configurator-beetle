@@ -53,7 +53,7 @@ export default function UIOverlay() {
           onClick={() => setIsCollapsed(false)}
           variant="outline"
           size="sm"
-          className="mb-3 backdrop-blur-md bg-white/90 dark:bg-black/90 border-white/20 w-10 h-10"
+          className="mb-3 bg-card/90 backdrop-blur-md border-border w-10 h-10"
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
@@ -62,13 +62,10 @@ export default function UIOverlay() {
       {!isCollapsed && (
         <>
           {/* Main Control Panel */}
-          <div className="text-left space-y-4 backdrop-blur-md bg-white/90 dark:bg-black/90 p-6 rounded-xl shadow-lg border border-white/20 mb-3">
+          <div className="text-left space-y-4 bg-card/90 text-card-foreground backdrop-blur-md p-6 rounded-xl shadow-lg border border-border mb-3">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-bold">Car Configurator</h1>
               <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">
-                  v1.0
-                </Badge>
                 <Button
                   onClick={() => setIsCollapsed(true)}
                   variant="ghost"
@@ -97,7 +94,13 @@ export default function UIOverlay() {
                       <Icon className="w-4 h-4" />
                       <div className="text-left flex-1">
                         <div className="font-medium text-sm">{label}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div
+                          className={`text-xs ${
+                            tab === id
+                              ? "text-primary-foreground/80"
+                              : "text-muted-foreground"
+                          }`}
+                        >
                           {description}
                         </div>
                       </div>
@@ -115,7 +118,7 @@ export default function UIOverlay() {
 
           {/* Content Panel */}
           {tab !== "default" && (
-            <div className="backdrop-blur-md bg-white/90 dark:bg-black/90 rounded-xl shadow-lg border border-white/20 overflow-hidden">
+            <div className="bg-card/90 text-card-foreground backdrop-blur-md rounded-xl shadow-lg border border-border overflow-hidden">
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-border/50">
                 <h2 className="font-semibold flex items-center gap-2">

@@ -6,39 +6,46 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car, Zap, Settings } from "lucide-react";
 
 import { partOptions } from "@/configs/config";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const PartSection = ({ options, currentValue, onSelect }) => (
+  <div className="space-y-3">
+    <div className="flex items-center gap-2 mb-4">
+      {currentValue !== undefined && (
+        <Badge variant="outline" className="text-xs">
+          {options.find((opt) => opt.id === currentValue)?.name || "None"}
+        </Badge>
+      )}
+    </div>
+
+    <div className="grid grid-cols-2 gap-2">
+      {options.map((option) => (
+        <Button
+          key={option.id}
+          onClick={() => onSelect(option.id)}
+          variant={currentValue === option.id ? "default" : "outline"}
+          disabled={option.disabled}
+          className="h-auto p-3 flex flex-col items-start text-left"
+        >
+          <div className="font-medium text-sm">{option.name}</div>
+          <div
+            className={`text-xs mt-1 ${
+              currentValue === option.id
+                ? "text-primary-foreground/80"
+                : "text-muted-foreground"
+            }`}
+          >
+            {option.description}
+          </div>
+        </Button>
+      ))}
+    </div>
+  </div>
+);
 
 const Parts = () => {
   const parts = useStore((state) => state.parts);
   const setParts = useStore((state) => state.setParts);
-
-  const PartSection = ({ options, currentValue, onSelect }) => (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 mb-4">
-        {currentValue !== undefined && (
-          <Badge variant="outline" className="text-xs">
-            {options.find((opt) => opt.id === currentValue)?.name || "None"}
-          </Badge>
-        )}
-      </div>
-
-      <div className="grid grid-cols-2 gap-2">
-        {options.map((option) => (
-          <Button
-            key={option.id}
-            onClick={() => onSelect(option.id)}
-            variant={currentValue === option.id ? "default" : "outline"}
-            disabled={option.disabled}
-            className="h-auto p-3 flex flex-col items-start text-left"
-          >
-            <div className="font-medium text-sm">{option.name}</div>
-            <div className="text-xs text-muted-foreground mt-1">
-              {option.description}
-            </div>
-          </Button>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -89,9 +96,11 @@ const Parts = () => {
       </Tabs>
 
       {/* Configuration Summary */}
-      <div className="bg-muted/50 rounded-lg p-3 mt-4">
-        <h4 className="font-semibold mb-2 text-sm">Current Configuration</h4>
-        <div className="space-y-1 text-xs">
+      <Card className="mt-4" size="sm">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm">Current Configuration</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-1 text-xs">
           <div>
             <span className="text-muted-foreground">Body:</span>{" "}
             <span className="font-medium">
@@ -113,8 +122,8 @@ const Parts = () => {
                 ?.name || "Not selected"}
             </span>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -251,12 +251,8 @@ const Beetle = forwardRef((props, ref) => {
     }
   };
 
-  // Destructure any “type” props you might pass from parent:
-  // e.g. <Beetle bodyType={1} wheelType={2} lightType={0} />
-  const { bodyType = 0, wheelType = 0, lightType = 0, ...rest } = props;
-
   return (
-    <group ref={ref} {...rest} dispose={null}>
+    <group ref={ref} {...props} dispose={null}>
       {/* Base “stock” meshes */}
       <mesh
         castShadow
