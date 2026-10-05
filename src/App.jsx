@@ -1,4 +1,11 @@
-import React, { Component, lazy, Suspense, useCallback, useState } from "react";
+import React, {
+  Component,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Canvas } from "@react-three/fiber";
 import UIOverlay from "./components/UIOverlay";
 import { ThemeToggle } from "./components/themeToggler";
@@ -6,6 +13,9 @@ import Footer from "./components/Footer";
 import packageJson from "../package.json";
 
 const Scene = lazy(() => import("./components/scene"));
+
+const isMobileViewport = () =>
+  window.matchMedia("(max-width: 639px) and (hover: none)").matches;
 
 class SceneErrorBoundary extends Component {
   state = { hasError: false };
@@ -27,7 +37,14 @@ class SceneErrorBoundary extends Component {
 function App() {
   const [sceneReady, setSceneReady] = useState(false);
   const [sceneError, setSceneError] = useState(false);
+  const [isMobile, setIsMobile] = useState(isMobileViewport);
   const markSceneReady = useCallback(() => setSceneReady(true), []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(isMobileViewport());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
@@ -60,9 +77,11 @@ function App() {
         </div>
       )}
       <UIOverlay />
-      <div className="absolute right-2 bottom-2 z-10 hidden sm:block sm:right-4 sm:bottom-4">
-        <ThemeToggle />
-      </div>
+      {!isMobile && (
+        <div className="absolute right-4 bottom-4 z-10">
+          <ThemeToggle />
+        </div>
+      )}
       <div className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 sm:bottom-4">
         <Footer />
       </div>

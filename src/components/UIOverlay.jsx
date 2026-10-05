@@ -22,6 +22,9 @@ import Materials from "./materials";
 import Extra from "./extra";
 import { ThemeToggle } from "./themeToggler";
 
+const isMobileViewport = () =>
+  window.matchMedia("(max-width: 639px) and (hover: none)").matches;
+
 const tabConfig = [
   {
     id: "material",
@@ -135,13 +138,16 @@ export default function UIOverlay() {
   const updateRotateSpeed = useStore((state) => state.updateRotateSpeed);
   const [tab, setTab] = useState("default");
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(isMobileViewport);
   const closeMenu = () => setIsCollapsed(true);
   const selectTab = (value) =>
     setTab((current) => (current === value ? "default" : value));
 
   useEffect(() => {
     const handleResize = () => {
-      setIsCollapsed(window.innerWidth < 640);
+      const mobile = isMobileViewport();
+      setIsMobile(mobile);
+      setIsCollapsed(mobile);
     };
 
     window.addEventListener("resize", handleResize);
@@ -150,53 +156,21 @@ export default function UIOverlay() {
 
   return (
     <>
-      <div className="absolute top-0 left-0 z-10 m-2 hidden max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-md overflow-y-auto sm:block sm:m-4 sm:max-h-[calc(100dvh-2rem)] sm:w-[calc(100vw-2rem)]">
-        {isCollapsed ? (
-          <Button
-            onClick={() => setIsCollapsed(false)}
-            variant="outline"
-            size="sm"
-            className="h-10 w-10 bg-card/90 backdrop-blur-md"
-            aria-label="Expand menu"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        ) : (
-          <>
-            <MenuPanel tab={tab} onTab={selectTab} onCollapse={closeMenu} />
-            <div className="mt-3">
-              <ContentPanel
-                tab={tab}
-                onClose={() => setTab("default")}
-                rotateSpeed={rotateSpeed}
-                updateRotateSpeed={updateRotateSpeed}
-              />
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="sm:hidden">
-        <Drawer
-          open={!isCollapsed}
-          onOpenChange={(open) => setIsCollapsed(!open)}
-        >
-          <DrawerTrigger asChild>
+      {!isMobile && (
+        <div className="absolute top-0 left-0 z-10 m-4 max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md overflow-y-auto">
+          {isCollapsed ? (
             <Button
+              onClick={() => setIsCollapsed(false)}
               variant="outline"
-              size="icon"
-              className="fixed top-2 left-2 z-20 bg-card/90 shadow-lg backdrop-blur-md"
-              aria-label="Open menu"
+              size="sm"
+              className="h-10 w-10 bg-card/90 backdrop-blur-md"
+              aria-label="Expand menu"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
-          </DrawerTrigger>
-          <DrawerContent className="max-h-[92dvh] bg-card text-card-foreground">
-            <DrawerHeader className="text-left">
-              <DrawerTitle>Car Configurator</DrawerTitle>
-            </DrawerHeader>
-            <div className="overflow-y-auto px-4 pb-2">
-              <MenuPanel tab={tab} onTab={selectTab} showTitle={false} />
+          ) : (
+            <>
+              <MenuPanel tab={tab} onTab={selectTab} onCollapse={closeMenu} />
               <div className="mt-3">
                 <ContentPanel
                   tab={tab}
@@ -205,13 +179,49 @@ export default function UIOverlay() {
                   updateRotateSpeed={updateRotateSpeed}
                 />
               </div>
-            </div>
-            <DrawerFooter className="items-center">
-              <ThemeToggle />
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {isMobile && (
+        <div>
+          <Drawer
+            open={!isCollapsed}
+            onOpenChange={(open) => setIsCollapsed(!open)}
+          >
+            <DrawerTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="fixed top-2 left-2 z-20 bg-card/90 shadow-lg backdrop-blur-md"
+                aria-label="Open menu"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="max-h-[92dvh] bg-card text-card-foreground">
+              <DrawerHeader className="text-left">
+                <DrawerTitle>Car Configurator</DrawerTitle>
+              </DrawerHeader>
+              <div className="overflow-y-auto px-4 pb-2">
+                <MenuPanel tab={tab} onTab={selectTab} showTitle={false} />
+                <div className="mt-3">
+                  <ContentPanel
+                    tab={tab}
+                    onClose={() => setTab("default")}
+                    rotateSpeed={rotateSpeed}
+                    updateRotateSpeed={updateRotateSpeed}
+                  />
+                </div>
+              </div>
+              <DrawerFooter className="items-center">
+                <ThemeToggle />
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </div>
+      )}
     </>
   );
 }
