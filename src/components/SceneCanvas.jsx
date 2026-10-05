@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 
-const Scene = lazy(() => import("./scene"));
+const Scene = lazy(() => import("./Scene"));
 
 export default function SceneCanvas({ onReady }) {
   return (

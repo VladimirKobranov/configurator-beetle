@@ -9,9 +9,9 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import Parts from "@/components/parts";
-import Materials from "./materials";
-import Extra from "./extra";
+import Parts from "@/components/Parts";
+import Materials from "./Materials";
+import Extra from "./Extra";
 
 const tabConfig = [
   {

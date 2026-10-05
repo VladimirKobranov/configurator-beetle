@@ -5,7 +5,7 @@ import { Car, Zap, Settings } from "lucide-react";
 
 import { partOptions } from "@/configs/config";
 import { Separator } from "@/components/ui/separator";
-import SelectableCard from "@/components/selectable-card";
+import SelectableCard from "@/components/SelectableCard";
 
 const PartSection = ({ options, currentValue, onSelect }) => (
   <div className="space-y-4">

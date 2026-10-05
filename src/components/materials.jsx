@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "../store"; // adjust as needed
 import { presetColors } from "@/configs/config";
-import SelectableCard from "@/components/selectable-card";
+import SelectableCard from "@/components/SelectableCard";
 
 const ColorPicker = ({ color, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);

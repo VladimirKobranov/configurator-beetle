@@ -1,6 +1,6 @@
 import React, { Component, lazy, useCallback, useState } from "react";
 import UIOverlay from "./components/UIOverlay";
-import { ThemeToggle } from "./components/themeToggler";
+import { ThemeToggle } from "./components/ThemeToggler";
 import Footer from "./components/Footer";
 import packageJson from "../package.json";
 import AppLoader from "./components/AppLoader";

@@ -1,4 +1,5 @@
 # Car Configurator
+
 <sub>Version 2.0.0</sub>
 
 Interactive 3D Beetle configurator built with React, Vite, Three.js, React Three Fiber, Zustand, Tailwind CSS, and shadcn/ui.
@@ -65,8 +66,8 @@ src/
   App.jsx                    # Application shell and loading flow
   components/
     SceneCanvas.jsx          # Lazy-loaded 3D canvas
-    scene.jsx                # Camera, lights, grid, and controls
-    beetle.jsx               # Beetle model and configuration logic
+    Scene.jsx                # Camera, lights, grid, and controls
+    Beetle.jsx               # Beetle model and configuration logic
     UIOverlay.jsx            # Main configurator UI
     AppLoader.jsx            # Initial loading and error states
     ui/                      # shadcn/ui components
