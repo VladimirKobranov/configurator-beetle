@@ -1,19 +1,15 @@
 import React from "react";
-import { ThemeToggle } from "./themeToggler";
 import { useStore } from "@/store";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { RotateCw, Grid3X3, Palette, Monitor } from "lucide-react";
+import { RotateCw, Grid3X3, Palette } from "lucide-react";
 
 const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
   const isGrid = useStore((state) => state.isGrid);
   const handleGridVisibility = useStore((state) => state.handleGridVisibility);
-
-  // Get current theme from store
-  const theme = useStore((state) => state.theme);
 
   return (
     <div className="space-y-6">
@@ -70,31 +66,6 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           />
         </div>
       </div>
-      <Separator />
-
-      {/* Theme Toggle */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Monitor className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Appearance</span>
-          </div>
-          <Badge
-            variant={theme === "dark" ? "default" : "secondary"}
-            className="text-xs"
-          >
-            {theme === "dark" ? "Dark" : "Light"}
-          </Badge>
-        </div>
-        <div className="flex items-center justify-between">
-          <Label className="text-sm text-muted-foreground">
-            Toggle light/dark theme
-          </Label>
-          <ThemeToggle />
-        </div>
-      </div>
-      <Separator />
-
       {/* Additional Info */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">

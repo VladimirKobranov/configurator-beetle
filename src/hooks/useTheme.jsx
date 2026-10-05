@@ -1,22 +1,25 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useStore } from "@/store/index";
 
 export function useTheme() {
   const setTheme = useStore((state) => state.setTheme);
   const theme = useStore((state) => state.theme);
+  const mediaQuery = useMemo(
+    () => window.matchMedia("(prefers-color-scheme: dark)"),
+    [],
+  );
+
+  const applyTheme = useCallback(() => {
+    const resolvedTheme =
+      theme === "system" ? (mediaQuery.matches ? "dark" : "light") : theme;
+    document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
+  }, [mediaQuery, theme]);
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
+    applyTheme();
+    mediaQuery.addEventListener("change", applyTheme);
+    return () => mediaQuery.removeEventListener("change", applyTheme);
+  }, [applyTheme, mediaQuery]);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  return { theme, toggleTheme };
+  return { theme, setTheme };
 }

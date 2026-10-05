@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { presetColors } from "@/configs/config"; // Adjust path if needed
 
+const storedTheme = localStorage.getItem("beetle-theme");
+const initialTheme = ["system", "light", "dark"].includes(storedTheme)
+  ? storedTheme
+  : "system";
+
 // Pick a random material object from the presetColors array
 const randomMaterial =
   presetColors[Math.floor(Math.random() * presetColors.length)].material;
@@ -34,7 +39,7 @@ const useStore = create((set) => ({
   isGrid: false,
 
   // Theme
-  theme: "light",
+  theme: initialTheme,
 
   // Methods
   updateRotateSpeed: (next) => set({ rotateSpeed: next }),
@@ -52,7 +57,10 @@ const useStore = create((set) => ({
 
   handleGridVisibility: () => set((state) => ({ isGrid: !state.isGrid })),
 
-  setTheme: (next) => set({ theme: next }),
+  setTheme: (next) => {
+    localStorage.setItem("beetle-theme", next);
+    set({ theme: next });
+  },
 }));
 
 export { useStore };

@@ -1,14 +1,36 @@
 import { useTheme } from "@/hooks/useTheme";
-import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-
-  const isDark = theme === "dark";
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center space-x-2">
-      <Switch onClick={toggleTheme} checked={isDark} />
+    <div className="flex items-center gap-1 rounded-lg border border-border bg-card/95 p-1 shadow-lg backdrop-blur-md">
+      <Button
+        variant={theme === "system" ? "default" : "ghost"}
+        size="icon"
+        aria-label="Use system theme"
+        onClick={() => setTheme("system")}
+      >
+        <Monitor className="size-4" />
+      </Button>
+      <Button
+        variant={theme === "light" ? "default" : "ghost"}
+        size="icon"
+        aria-label="Use light theme"
+        onClick={() => setTheme("light")}
+      >
+        <Sun className="size-4" />
+      </Button>
+      <Button
+        variant={theme === "dark" ? "default" : "ghost"}
+        size="icon"
+        aria-label="Use dark theme"
+        onClick={() => setTheme("dark")}
+      >
+        <Moon className="size-4" />
+      </Button>
     </div>
   );
 }
