@@ -10,7 +10,16 @@ const Scene = lazy(() => import("./components/scene"));
 function App() {
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      <Canvas className="absolute inset-0 z-0" shadows dpr={[1, 1.5]}>
+      <Canvas
+        className="absolute inset-0 z-0"
+        shadows
+        dpr={[1, 1.5]}
+        fallback={
+          <div className="grid h-full place-items-center bg-background p-6 text-sm text-muted-foreground">
+            3D preview is unavailable in this browser.
+          </div>
+        }
+      >
         <Suspense fallback={null}>
           <Scene />
         </Suspense>
