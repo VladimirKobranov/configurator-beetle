@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "../store"; // adjust as needed
 import { presetColors } from "@/configs/config";
+import SelectableCard from "@/components/selectable-card";
 
 const ColorPicker = ({ color, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,11 +61,11 @@ const ColorPicker = ({ color, onChange }) => {
 };
 
 const ColorCard = ({ color, isSelected, onSelect }) => (
-  <div
-    onClick={onSelect}
-    className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all
-      hover:bg-accent hover:border-accent-foreground/20
-      ${isSelected ? "border-primary bg-primary/5" : "border-border"}`}
+  <SelectableCard
+    title={color.name}
+    description={`${color.description} · ${color.hex}`}
+    selected={isSelected}
+    onSelect={onSelect}
   >
     <Avatar className="w-8 h-8">
       <AvatarFallback
@@ -72,13 +73,8 @@ const ColorCard = ({ color, isSelected, onSelect }) => (
         className="border-2 border-background"
       />
     </Avatar>
-    <div className="flex-grow">
-      <span className="font-medium">{color.name}</span>
-      <div className="text-xs text-muted-foreground">{color.description}</div>
-      <div className="text-xs text-muted-foreground font-mono">{color.hex}</div>
-    </div>
-    {isSelected && <Check className="w-4 h-4 text-primary" />}
-  </div>
+    {isSelected && <Check className="size-4 text-primary-foreground" />}
+  </SelectableCard>
 );
 
 const Materials = () => {
@@ -140,7 +136,7 @@ const Materials = () => {
   const selected = presetColors.find((p) => p.name === selectedColor);
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="mx-auto w-full max-w-md">
       <Tabs defaultValue="presets">
         <TabsList className="flex w-full">
           <TabsTrigger
@@ -160,7 +156,7 @@ const Materials = () => {
         </TabsList>
 
         <TabsContent value="presets">
-          <ScrollArea className="h-[400px] w-full">
+          <ScrollArea className="h-[min(400px,calc(100dvh-20rem))] w-full">
             <div className="flex flex-col gap-2 pr-4">
               {presetColors.map((color) => (
                 <ColorCard

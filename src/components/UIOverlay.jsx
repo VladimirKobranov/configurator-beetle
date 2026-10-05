@@ -45,7 +45,7 @@ export default function UIOverlay() {
   ];
 
   return (
-    <div className="absolute top-0 left-0 z-10 m-4 w-full max-w-md">
+    <div className="absolute top-0 left-0 z-10 m-4 max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md overflow-y-auto">
       {isCollapsed ? (
         <Button
           onClick={() => setIsCollapsed(false)}
@@ -84,6 +84,7 @@ export default function UIOverlay() {
                     key={id}
                     onClick={() => handleTab(id)}
                     variant={tab === id ? "default" : "outline"}
+                    aria-pressed={tab === id}
                     className="h-auto p-3 justify-start"
                   >
                     <div className="flex items-center gap-3 w-full">

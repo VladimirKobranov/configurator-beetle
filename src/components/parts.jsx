@@ -1,34 +1,24 @@
 import { useStore } from "@/store";
 import React from "react";
-import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car, Zap, Settings } from "lucide-react";
 
 import { partOptions } from "@/configs/config";
 import { Separator } from "@/components/ui/separator";
+import SelectableCard from "@/components/selectable-card";
 
 const PartSection = ({ options, currentValue, onSelect }) => (
   <div className="space-y-4">
     <div className="grid grid-cols-2 gap-2">
       {options.map((option) => (
-        <Button
+        <SelectableCard
           key={option.id}
-          onClick={() => onSelect(option.id)}
-          variant={currentValue === option.id ? "default" : "outline"}
+          title={option.name}
+          description={option.description}
+          selected={currentValue === option.id}
+          onSelect={() => onSelect(option.id)}
           disabled={option.disabled}
-          className="h-auto p-3 flex flex-col items-start text-left"
-        >
-          <div className="font-medium text-sm">{option.name}</div>
-          <div
-            className={`text-xs mt-1 ${
-              currentValue === option.id
-                ? "text-primary-foreground/80"
-                : "text-muted-foreground"
-            }`}
-          >
-            {option.description}
-          </div>
-        </Button>
+        />
       ))}
     </div>
   </div>
@@ -39,7 +29,7 @@ const Parts = () => {
   const setParts = useStore((state) => state.setParts);
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="mx-auto w-full max-w-md">
       <Tabs defaultValue="body" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="body" className="flex items-center gap-1">
