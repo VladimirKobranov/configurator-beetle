@@ -66,6 +66,7 @@ const Extra = ({ rotateSpeed, updateRotateSpeed }) => {
           />
         </div>
       </div>
+      <Separator />
       {/* Additional Info */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">

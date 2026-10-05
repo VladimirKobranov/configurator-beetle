@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car, Zap, Settings } from "lucide-react";
 
 import { partOptions } from "@/configs/config";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const PartSection = ({ options, currentValue, onSelect }) => (
   <div className="space-y-4">
@@ -81,35 +81,31 @@ const Parts = () => {
         </TabsContent>
       </Tabs>
 
-      {/* Configuration Summary */}
-      <Card className="mt-4" size="sm">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm">Current Configuration</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-1 text-xs">
-          <div>
-            <span className="text-muted-foreground">Body:</span>{" "}
-            <span className="font-medium">
-              {partOptions.body.find((opt) => opt.id === parts.body)?.name ||
-                "Not selected"}
-            </span>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Wheels:</span>{" "}
-            <span className="font-medium">
-              {partOptions.wheels.find((opt) => opt.id === parts.wheels)
-                ?.name || "Not selected"}
-            </span>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Lights:</span>{" "}
-            <span className="font-medium">
-              {partOptions.lights.find((opt) => opt.id === parts.lights)
-                ?.name || "Not selected"}
-            </span>
-          </div>
-        </CardContent>
-      </Card>
+      <Separator className="my-4" />
+      <div className="space-y-1 text-xs">
+        <p className="text-sm font-medium">Current Configuration</p>
+        <div>
+          <span className="text-muted-foreground">Body:</span>{" "}
+          <span className="font-medium">
+            {partOptions.body.find((opt) => opt.id === parts.body)?.name ||
+              "Not selected"}
+          </span>
+        </div>
+        <div>
+          <span className="text-muted-foreground">Wheels:</span>{" "}
+          <span className="font-medium">
+            {partOptions.wheels.find((opt) => opt.id === parts.wheels)?.name ||
+              "Not selected"}
+          </span>
+        </div>
+        <div>
+          <span className="text-muted-foreground">Lights:</span>{" "}
+          <span className="font-medium">
+            {partOptions.lights.find((opt) => opt.id === parts.lights)?.name ||
+              "Not selected"}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

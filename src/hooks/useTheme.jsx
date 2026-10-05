@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect, useMemo } from "react";
 import { useStore } from "@/store/index";
 
 export function useTheme() {
@@ -15,7 +15,7 @@ export function useTheme() {
     document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
   }, [mediaQuery, theme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     applyTheme();
     mediaQuery.addEventListener("change", applyTheme);
     return () => mediaQuery.removeEventListener("change", applyTheme);
