@@ -1,7 +1,6 @@
 import { useStore } from "@/store";
 import React from "react";
 import { Button } from "./ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car, Zap, Settings } from "lucide-react";
 
@@ -10,14 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const PartSection = ({ options, currentValue, onSelect }) => (
   <div className="space-y-3">
-    <div className="flex items-center gap-2 mb-4">
-      {currentValue !== undefined && (
-        <Badge variant="outline" className="text-xs">
-          {options.find((opt) => opt.id === currentValue)?.name || "None"}
-        </Badge>
-      )}
-    </div>
-
     <div className="grid grid-cols-2 gap-2">
       {options.map((option) => (
         <Button

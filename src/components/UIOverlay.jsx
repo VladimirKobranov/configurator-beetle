@@ -1,7 +1,6 @@
 import { useStore } from "@/store";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   X,
   Palette,
@@ -47,38 +46,35 @@ export default function UIOverlay() {
 
   return (
     <div className="absolute top-0 left-0 z-10 m-4 w-full max-w-md">
-      {/* Collapse/Expand Button */}
-      {isCollapsed && (
+      {isCollapsed ? (
         <Button
           onClick={() => setIsCollapsed(false)}
           variant="outline"
           size="sm"
-          className="mb-3 bg-card/90 backdrop-blur-md border-border w-10 h-10"
+          className="h-10 w-10 bg-card/90 backdrop-blur-md"
+          aria-label="Expand menu"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="h-4 w-4" />
         </Button>
-      )}
+      ) : (
+        <div className="mb-3 rounded-xl border border-border bg-card/90 p-6 text-card-foreground shadow-lg backdrop-blur-md">
+          {/* Main UI block with title */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold">Car Configurator</h1>
+          <Button
+            onClick={() => setIsCollapsed((collapsed) => !collapsed)}
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0"
+            aria-label={isCollapsed ? "Expand menu" : "Collapse menu"}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </Button>
+        </div>
 
-      {!isCollapsed && (
-        <>
-          {/* Main Control Panel */}
-          <div className="text-left space-y-4 bg-card/90 text-card-foreground backdrop-blur-md p-6 rounded-xl shadow-lg border border-border mb-3">
-            <div className="flex items-center justify-between">
-              <h1 className="text-xl font-bold">Car Configurator</h1>
-              <div className="flex items-center gap-2">
-                <Button
-                  onClick={() => setIsCollapsed(true)}
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Tab Navigation */}
-            <div className="space-y-2">
+        <div className="mt-4 space-y-4">
+          {/* Tab Navigation */}
+          <div className="space-y-2">
               <h3 className="text-sm font-medium text-muted-foreground">
                 Customize
               </h3>
@@ -104,20 +100,17 @@ export default function UIOverlay() {
                           {description}
                         </div>
                       </div>
-                      {tab === id && (
-                        <Badge variant="secondary" size="sm">
-                          Active
-                        </Badge>
-                      )}
                     </div>
                   </Button>
                 ))}
               </div>
-            </div>
           </div>
+        </div>
+        </div>
+      )}
 
-          {/* Content Panel */}
-          {tab !== "default" && (
+      {/* Content Panel */}
+      {!isCollapsed && tab !== "default" && (
             <div className="bg-card/90 text-card-foreground backdrop-blur-md rounded-xl shadow-lg border border-border overflow-hidden">
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-border/50">
@@ -155,8 +148,6 @@ export default function UIOverlay() {
                 )}
               </div>
             </div>
-          )}
-        </>
       )}
     </div>
   );
