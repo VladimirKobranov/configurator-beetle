@@ -57,6 +57,7 @@ const ColorPicker = ({ color, onChange }) => {
         <div className="absolute left-0 top-12 z-20 rounded-lg border border-border bg-card p-2 shadow-lg">
           <Colorful
             color={color}
+            disableAlpha
             onChange={({ hex }) => {
               setHexValue(hex.toUpperCase());
               onChange(hex);
